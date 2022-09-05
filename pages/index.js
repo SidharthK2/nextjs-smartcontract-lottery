@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import Header from "../components/ManualHeader";
+import ManualHeader from "../components/ManualHeader";
+import LotteryEntrance from "../components/LotteryEntrance";
 
 export default function Home() {
   return (
@@ -11,8 +12,7 @@ export default function Home() {
         <meta name="description" content="Smart contract lottery" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      hi from index
+      <ManualHeader />
     </div>
   );
 }

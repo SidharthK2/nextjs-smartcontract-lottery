@@ -11,14 +11,17 @@ export default function ManualHeader() {
     deactivateWeb3,
     isWeb3EnableLoading,
   } = useMoralis();
+
   useEffect(() => {
     if (isWeb3Enabled) return;
-    if (typeof window !== "undefined") {
-      if (window.localStorage.getItem("connected")) {
-        enableWeb3();
-      }
+    if (
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("connected")
+    ) {
+      enableWeb3();
     }
   }, [isWeb3Enabled]);
+
   useEffect(() => {
     Moralis.onAccountChanged((account) => {
       console.log(`Account changed to ${account}`);
@@ -28,7 +31,7 @@ export default function ManualHeader() {
         console.log("Null account found");
       }
     });
-  }, []);
+  }, [account]);
 
   return (
     <div>
@@ -40,10 +43,12 @@ export default function ManualHeader() {
       ) : (
         <button
           onClick={async () => {
-            await enableWeb3();
-            if (typeof window !== "undefined") {
-              window.localStorage.setItem("connected", "injected");
-            }
+            enableWeb3().then((res) => {
+              if (typeof window !== "undefined" && res) {
+                window.localStorage.setItem("connected", "injected");
+                console.log(res);
+              }
+            });
           }}
           disabled={isWeb3EnableLoading}>
           Connect
