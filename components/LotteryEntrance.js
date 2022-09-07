@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useWeb3Contract } from "react-moralis";
 import { abi, contractAddresses } from "../constants";
 import { useMoralis } from "react-moralis";
