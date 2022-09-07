@@ -7,7 +7,7 @@ export default function LotteryEntrance() {
   const { chainId: chainIdHex, isWeb3Enabled } = useMoralis();
   const chainId = parseInt(chainIdHex);
   const raffleAddress =
-    chainIdHex in contractAddresses ? contractAddresses[chainId][0] : null;
+    chainId in contractAddresses ? contractAddresses[chainId][0] : null;
   // const { runContractFunction: enterRaffle } = useWeb3Contract({
   //   abi: abi,
   //   contractAddress: raffleAddress,
