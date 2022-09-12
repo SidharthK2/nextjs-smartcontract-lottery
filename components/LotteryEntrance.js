@@ -16,7 +16,7 @@ export default function LotteryEntrance() {
     contractAddress: raffleAddress,
     functionName: "enterRaffle",
     params: {},
-    msgValue: ,
+    msgValue: entranceFee,
   });
 
   const { runContractFunction: getEntranceFee } = useWeb3Contract({
