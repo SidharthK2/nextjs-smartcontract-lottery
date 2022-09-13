@@ -74,7 +74,7 @@ export default function LotteryEntrance() {
     });
   };
   return (
-    <div className="">
+    <div className="text-blue-500">
       Hi from lottery entrance
       {raffleAddress ? (
         <div>
