@@ -11,6 +11,8 @@ export default function LotteryEntrance() {
   const raffleAddress =
     chainId in contractAddresses ? contractAddresses[chainId][0] : null;
   const [entranceFee, setEntranceFee] = useState("0");
+  const [numPlayers, setNumPlayers] = useState("0");
+  const [recentWinner, setRecentWinner] = useState("0");
 
   const dispatch = useNotification();
 
@@ -29,12 +31,30 @@ export default function LotteryEntrance() {
     params: {},
   });
 
+  const { runContractFunction: getNumberOfPlayers } = useWeb3Contract({
+    abi: abi,
+    contractAddress: raffleAddress,
+    functionName: "getNumberOfPlayers",
+    params: {},
+  });
+  const { runContractFunction: getRecentWinner } = useWeb3Contract({
+    abi: abi,
+    contractAddress: raffleAddress,
+    functionName: "getRecentWinner",
+    params: {},
+  });
+
+  async function updateUI() {
+    const entranceFeeFromCall = (await getEntranceFee()).toString();
+    setEntranceFee(entranceFeeFromCall, "ether");
+    const numPlayersFromCall = (await getNumberOfPlayers()).toString();
+    setNumPlayers(numPlayersFromCall);
+    const recentWinnerFromCall = (await getRecentWinner()).toString();
+    setRecentWinner(recentWinnerFromCall);
+  }
+
   useEffect(() => {
     if (isWeb3Enabled) {
-      async function updateUI() {
-        const entranceFeeFromCall = (await getEntranceFee()).toString();
-        setEntranceFee(entranceFeeFromCall, "ether");
-      }
       updateUI();
     }
   }, [isWeb3Enabled]);
@@ -42,6 +62,7 @@ export default function LotteryEntrance() {
   const handleSuccess = async (tx) => {
     await tx.wait(1);
     handleNewNotification(tx);
+    updateUI();
   };
   const handleNewNotification = () => {
     dispatch({
@@ -66,7 +87,10 @@ export default function LotteryEntrance() {
             }}>
             Enter Raffle
           </button>
-          Entrance Fee: {ethers.utils.formatUnits(entranceFee)} ETH
+          <br />
+          Entrance Fee: {ethers.utils.formatUnits(entranceFee)} ETH <br />
+          Number of players: {numPlayers} <br />
+          Recent Winner: {recentWinner}
         </div>
       ) : (
         <div>No Raffle Address detected</div>
