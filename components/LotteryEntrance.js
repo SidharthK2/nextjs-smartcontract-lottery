@@ -55,6 +55,14 @@ export default function LotteryEntrance() {
 
   useEffect(() => {
     if (isWeb3Enabled) {
+      const onWinnerPicked = async () => {
+        const provider = new ethers.providers.JsonRpcProvider();
+        const raffle = new ethers.Contract(raffleAddress, abi, provider);
+        raffle.on("WinnerPicked", (winnerAddress) => {
+          setRecentWinner(winnerAddress);
+        });
+      };
+      onWinnerPicked();
       updateUI();
     }
   }, [isWeb3Enabled]);
@@ -79,6 +87,7 @@ export default function LotteryEntrance() {
       {raffleAddress ? (
         <div>
           <button
+            className="bg-green-300 rounded-md"
             onClick={async () => {
               await enterRaffle({
                 onSuccess: handleSuccess,
