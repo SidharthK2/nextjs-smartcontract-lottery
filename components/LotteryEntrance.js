@@ -87,7 +87,7 @@ export default function LotteryEntrance() {
       {raffleAddress ? (
         <div>
           <button
-            className="bg-green-300 rounded-lg p-1 hover:bg-green-400"
+            className="bg-green-400 text-white rounded-lg p-1 hover:bg-green-500"
             onClick={async () => {
               await enterRaffle({
                 onSuccess: handleSuccess,
