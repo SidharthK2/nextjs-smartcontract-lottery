@@ -87,7 +87,7 @@ export default function LotteryEntrance() {
       {raffleAddress ? (
         <div>
           <button
-            className="bg-green-400 text-white rounded-lg p-1 hover:bg-green-500"
+            className="bg-green-400 text-white rounded-lg p-1 hover:bg-green-500 m-2"
             onClick={async () => {
               await enterRaffle({
                 onSuccess: handleSuccess,
@@ -96,6 +96,7 @@ export default function LotteryEntrance() {
             }}>
             Enter Raffle
           </button>
+          <br />
           <br />
           Entrance Fee: {ethers.utils.formatUnits(entranceFee)} ETH <br />
           Number of players: {numPlayers} <br />
